@@ -14,7 +14,7 @@ dependencies {
 }
 
 val fatJar = task("fatJar", type = Jar::class) {
-    baseName = "${project.name}-fat"
+    baseName = project.name
     manifest {
         attributes["Implementation-Title"] = rootProject.name
         attributes["Implementation-Version"] = rootProject.version
