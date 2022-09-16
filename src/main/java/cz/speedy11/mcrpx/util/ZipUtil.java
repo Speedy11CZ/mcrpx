@@ -2,6 +2,9 @@ package cz.speedy11.mcrpx.util;
 
 import java.io.*;
 import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarException;
+import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
@@ -24,7 +27,7 @@ public class ZipUtil {
     }
 
     /**
-     * Unzips zip file into directory.
+     * Extracts content of zip file into directory.
      *
      * @param file zip file
      * @param destDirectory destination directory
@@ -32,14 +35,13 @@ public class ZipUtil {
      * @throws IOException if an I/O error occurs
      * @throws ZipException if a ZIP format error has occurred
      */
-    public static void unzip(File file, File destDirectory) throws IOException {
+    public static void extractZip(File file, File destDirectory) throws IOException {
         if (!destDirectory.exists()) {
             destDirectory.mkdir();
         }
 
         ZipFile zipFile = new ZipFile(file);
         Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
-
         System.out.println("Extracting resource pack " + file.getName() + " to directory " + destDirectory.getName());
         int elementCount = 0;
         while (zipEntries.hasMoreElements()) {
@@ -55,6 +57,46 @@ public class ZipUtil {
 
         System.out.println("Successfully extracted " + elementCount + " elements");
         zipFile.close();
+    }
+
+    /**
+     * Extracts resource pack from Minecraft jar file.
+     *
+     * @param file jar file
+     * @param destDirectory destination directory
+     *
+     * @throws IOException if an I/O error occurs
+     * @throws JarException if a JAR format error has occurred
+     */
+    public static void extractMinecraft(File file, File destDirectory) throws IOException {
+        if (!destDirectory.exists()) {
+            destDirectory.mkdir();
+        }
+
+        JarFile jarFile = new JarFile(file);
+        Enumeration<? extends JarEntry> jarEntries = jarFile.entries();
+        System.out.println("Extracting resource pack from Minecraft " + file.getName() + " to directory " + destDirectory.getName());
+        int elementCount = 0;
+        while (jarEntries.hasMoreElements()) {
+            JarEntry jarEntry = jarEntries.nextElement();
+            if(jarEntry.getName().startsWith("assets/")) {
+                System.out.println("Extracting " + jarEntry.getName());
+                InputStream entryInputStream = jarFile.getInputStream(jarEntry);
+                String filePath = destDirectory + File.separator + jarEntry.getName();
+                File jarEntryFile = new File(filePath);
+                jarEntryFile.getParentFile().mkdirs();
+                extractFile(entryInputStream, jarEntryFile);
+                elementCount++;
+            }
+        }
+
+        if(elementCount == 0) {
+            System.out.println("No resource pack found. Please check if you provided valid Minecraft jar file");
+        } else {
+            System.out.println("Successfully extracted " + elementCount + " elements");
+        }
+
+        jarFile.close();
     }
 
     /**

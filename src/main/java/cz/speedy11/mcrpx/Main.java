@@ -9,6 +9,7 @@ import joptsimple.OptionSpec;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.jar.JarException;
 import java.util.zip.ZipException;
 
 public class Main {
@@ -16,10 +17,11 @@ public class Main {
     public static void main(String[] args) throws IOException {
         OptionParser parser = new OptionParser();
         parser.acceptsAll(Arrays.asList("?", "help"), "Show the help");
-        OptionSpec<File> resourcePackFileSpec = parser.acceptsAll(Arrays.asList("i", "input"), "Input file with resource pack")
+        parser.acceptsAll(Arrays.asList("mc", "minecraft"), "Extract resource pack from Minecraft jar");
+        OptionSpec<File> inputFileSpec = parser.acceptsAll(Arrays.asList("i", "input"), "Input file to extract resource pack from")
                 .withRequiredArg()
                 .ofType(File.class)
-                .describedAs("Resource pack zip file")
+                .describedAs("Input file")
                 .required();
 
         OptionSpec<File> outputDirectorySpec = parser.acceptsAll(Arrays.asList("o", "output"), "Output directory for resource pack content")
@@ -44,10 +46,10 @@ public class Main {
             }
         }
 
-        File resourcePackFile = options.valueOf(resourcePackFileSpec);
+        File inputFile = options.valueOf(inputFileSpec);
         File outputDirectory = options.valueOf(outputDirectorySpec);
 
-        if(!resourcePackFile.exists()) {
+        if(!inputFile.exists()) {
             System.out.println("Input file does not exists");
             return;
         }
@@ -57,10 +59,18 @@ public class Main {
             return;
         }
 
-        try {
-            ZipUtil.unzip(resourcePackFile, outputDirectory);
-        } catch (ZipException exception) {
-            System.out.println("Input file is not valid resource pack");
+        if(options.has("mc")) {
+            try {
+                ZipUtil.extractMinecraft(inputFile, outputDirectory);
+            } catch (JarException exception) {
+                System.out.println("Input file is not valid Minecraft jar");
+            }
+        } else {
+            try {
+                ZipUtil.extractZip(inputFile, outputDirectory);
+            } catch (ZipException exception) {
+                System.out.println("Input file is not valid resource pack");
+            }
         }
     }
 }
