@@ -10,6 +10,7 @@ It uses same method as Minecraft to load resource packs.
 Because Minecraft must be able to load corrupted resource packs, this allows us to extract them too.
 
 ## How to use
+This tool can be used only in command line. You need to have Java installed on your computer.
 ```bash
 Option (* = required)                   Description                       
 ---------------------                   -----------                       
@@ -17,6 +18,9 @@ Option (* = required)                   Description
 * -i, --input <file>                    Input resource pack                                               
 -o, --output <file> (default: output)   Output directory for resource pack    
 ```
+
+### Example
+`java -jar MCRPX.jar -i my-resource-pack.zip -o my-resource-pack`
 
 ## Building
 For building this project, you need JDK 8 or newer.
