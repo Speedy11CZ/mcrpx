@@ -14,10 +14,8 @@ Because Minecraft must be able to load corrupted resource packs, this allows us 
 Option (* = required)                   Description                       
 ---------------------                   -----------                       
 -?, --help                              Show the help                     
-* -i, --input <File: Resource pack zip  Input file with resource pack     
-  file>                                                                   
--o, --output <File: Resource pack       Output directory for resource pack
-  output directory>                       content (default: output)       
+* -i, --input <file>                    Input resource pack                                               
+-o, --output <file> (default: output)   Output directory for resource pack    
 ```
 
 ## Building
