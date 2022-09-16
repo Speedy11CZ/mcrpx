@@ -1,0 +1,7 @@
+# Gradle
+.gradle
+**/build/
+!src/**/build/
+
+# IntellIJ Idea
+.idea
