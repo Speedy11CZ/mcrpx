@@ -55,7 +55,7 @@ public class FileUtil {
         }
 
         try(Stream<Path> directoryStream = Files.list(file.toPath())) {
-            return directoryStream.findFirst().isEmpty();
+            return !directoryStream.findFirst().isPresent();
         } catch (IOException e) {
             throw new IOException("Cannot check if directory is empty", e);
         }
