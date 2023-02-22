@@ -33,4 +33,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: jars
-          path: build/libs/MCRPX-*.jar
+          path: |
+            cli/build/libs/MCRPX-cli-*.jar
+            gui/build/libs/MCRPX-gui-*.jar
