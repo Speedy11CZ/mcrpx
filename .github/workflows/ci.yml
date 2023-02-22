@@ -3,12 +3,12 @@ name: Build Gradle and Publish
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
     tags:
       - 'v*'
   pull_request:
     branches:
-      - 'master'
+      - 'main'
 jobs:
   build-gradle:
     runs-on: ubuntu-latest
