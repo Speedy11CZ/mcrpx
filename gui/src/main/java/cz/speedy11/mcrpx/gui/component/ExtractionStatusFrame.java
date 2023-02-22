@@ -85,6 +85,7 @@ public class ExtractionStatusFrame extends JFrame implements ExtractTaskListener
         gbcProgressBar.fill = GridBagConstraints.HORIZONTAL;
         gbcProgressBar.gridx = 0;
         gbcProgressBar.gridy = 1;
+        progressBar.setStringPainted(true);
         panel.add(progressBar, gbcProgressBar);
 
         JButton btnCancel = new JButton("Cancel");
