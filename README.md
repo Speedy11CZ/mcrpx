@@ -15,7 +15,7 @@ Because Minecraft must be able to load corrupted resource packs, this allows us 
 This tool can be used only in **GUI** *(recommended)* or in **CLI**. You need to have Java 17 or higher installed on your computer.
 
 ## Building
-For building this project, you need JDK 8 or newer.
+For building this project, you need JDK 17 or newer.
 Then, just run script `gradlew build` in project directory.
 You can find compiled JAR files in `*/build/libs` directories.
 
