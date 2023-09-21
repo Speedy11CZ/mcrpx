@@ -21,7 +21,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '8'
+          java-version: '17'
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
@@ -34,5 +34,5 @@ jobs:
         with:
           name: jars
           path: |
-            cli/build/libs/MCRPX-cli-*.jar
-            gui/build/libs/MCRPX-gui-*.jar
+            cli/build/libs/mcrpx-cli-*.jar
+            gui/build/libs/mcrpx-gui-*.jar

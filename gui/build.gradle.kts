@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":common"))
+    implementation(rootProject.projects.mcrpxCommon)
 }
 
 tasks.withType<Jar> {
@@ -15,13 +15,11 @@ tasks.withType<Jar> {
 }
 
 tasks.shadowJar {
-    archiveFileName.set("MCRPX-gui-${rootProject.version}.jar")
+    archiveFileName.set("mcrpx-gui-${rootProject.version}.jar")
 }
 
-tasks {
-    "build" {
-        dependsOn(shadowJar)
-    }
+tasks.build {
+    dependsOn(tasks.shadowJar)
 }
 
 artifacts {

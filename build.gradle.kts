@@ -1,13 +1,18 @@
 plugins {
     id("java")
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    alias(libs.plugins.shadow)
 }
 
-group = "cz.speedy11"
-version = "1.2.0"
-
-subprojects {
+allprojects {
     apply(plugin = "java")
+
+    group = "cz.speedy11"
+    version = property("projectVersion") as String // from gradle.properties
+    description = property("projectDescription") as String // from gradle.properties
+
+    java {
+        toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    }
 
     repositories {
         mavenCentral()

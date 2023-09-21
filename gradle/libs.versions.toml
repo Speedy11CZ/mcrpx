@@ -1,0 +1,9 @@
+[versions]
+jopt-simple = "5.0.4"
+shadow = "8.1.1"
+
+[libraries]
+jopt-simple = { group = "net.sf.jopt-simple", name = "jopt-simple", version.ref = "jopt-simple" }
+
+[plugins]
+shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }

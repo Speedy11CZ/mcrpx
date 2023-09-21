@@ -3,18 +3,16 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":common"))
-    implementation("net.sf.jopt-simple:jopt-simple:5.0.4")
+    implementation(rootProject.projects.mcrpxCommon)
+    implementation(libs.jopt.simple)
 }
 
 tasks.shadowJar {
-    archiveFileName.set("MCRPX-cli-${rootProject.version}.jar")
+    archiveFileName.set("mcrpx-cli-${rootProject.version}.jar")
 }
 
-tasks {
-    "build" {
-        dependsOn(shadowJar)
-    }
+tasks.build {
+    dependsOn(tasks.shadowJar)
 }
 
 artifacts {
