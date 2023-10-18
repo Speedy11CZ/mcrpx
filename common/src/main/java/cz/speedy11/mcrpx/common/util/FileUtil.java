@@ -50,11 +50,11 @@ public class FileUtil {
      * @throws IOException if an I/O error occurs
      */
     public static boolean isEmpty(File file) throws IOException {
-        if(!file.isDirectory()) {
+        if (!file.isDirectory()) {
             throw new IllegalArgumentException("File is not directory");
         }
 
-        try(Stream<Path> directoryStream = Files.list(file.toPath())) {
+        try (Stream<Path> directoryStream = Files.list(file.toPath())) {
             return !directoryStream.findFirst().isPresent();
         } catch (IOException e) {
             throw new IOException("Cannot check if directory is empty", e);

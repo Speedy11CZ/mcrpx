@@ -56,9 +56,9 @@ public class ZipUtil {
     /**
      * Extracts Minecraft assets file into directory.
      *
-     * @param file            Minecraft jar file or resource pack zip file
-     * @param destDirectory   destination directory
-     * @param listener        extraction listener
+     * @param file          Minecraft jar file or resource pack zip file
+     * @param destDirectory destination directory
+     * @param listener      extraction listener
      * @return future of extraction
      */
     public static Future<?> extract(File file, File destDirectory, ExtractTaskListener listener) {
@@ -84,7 +84,7 @@ public class ZipUtil {
      *
      * @param file          resource pack
      * @param destDirectory destination directory
-     * @param listener        extraction listener
+     * @param listener      extraction listener
      * @throws IOException  if an I/O error occurs
      * @throws ZipException if a ZIP format error has occurred
      */
@@ -92,13 +92,14 @@ public class ZipUtil {
         if (!destDirectory.exists()) {
             destDirectory.mkdir();
         }
+
         try (ZipFile zipFile = new ZipFile(file)) {
             Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
             listener.onMessage("Extracting resource pack " + file.getName() + " to directory " + destDirectory.getName());
             int elementCount = 0;
             while (zipEntries.hasMoreElements()) {
                 ZipEntry zipEntry = zipEntries.nextElement();
-                if (!zipEntry.isDirectory()) {
+                try {
                     listener.onMessage("Extracting " + zipEntry.getName());
                     try (InputStream entryInputStream = zipFile.getInputStream(zipEntry)) {
                         String filePath = destDirectory + File.separator + zipEntry.getName();
@@ -107,6 +108,10 @@ public class ZipUtil {
                         listener.fileProcessed(entryInputStream.available());
                         extractFile(entryInputStream, zipEntryFile);
                         elementCount++;
+                    }
+                } catch (IOException e) {
+                    if (!zipEntry.isDirectory()) {
+                        listener.onMessage("Skipping " + zipEntry.getName() + ": " + e.getMessage());
                     }
                 }
             }
@@ -121,7 +126,7 @@ public class ZipUtil {
      *
      * @param file          Minecraft jar
      * @param destDirectory destination directory
-     * @param listener        extraction listener
+     * @param listener      extraction listener
      * @throws IOException  if an I/O error occurs
      * @throws JarException if a JAR format error has occurred
      */
@@ -220,7 +225,7 @@ public class ZipUtil {
             Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
             while (zipEntries.hasMoreElements()) {
                 ZipEntry zipEntry = zipEntries.nextElement();
-                if (zipEntry.getName().equals("pack.mcmeta")) {
+                if (zipEntry.getName().equals("pack.mcmeta") || zipEntry.getName().equals("pack.mcmeta/")) { // Directory-based obfuscation
                     return true;
                 }
             }
