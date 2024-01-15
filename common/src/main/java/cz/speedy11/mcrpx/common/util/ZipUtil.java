@@ -99,6 +99,11 @@ public class ZipUtil {
             int elementCount = 0;
             while (zipEntries.hasMoreElements()) {
                 ZipEntry zipEntry = zipEntries.nextElement();
+                if (zipEntry.getName().contains("..")) {
+                    listener.onMessage("Skipping " + zipEntry.getName() + ": Invalid path");
+                    continue;
+                }
+
                 try {
                     listener.onMessage("Extracting " + zipEntry.getName());
                     try (InputStream entryInputStream = zipFile.getInputStream(zipEntry)) {
@@ -141,6 +146,11 @@ public class ZipUtil {
             int elementCount = 0;
             while (jarEntries.hasMoreElements()) {
                 JarEntry jarEntry = jarEntries.nextElement();
+                if (jarEntry.getName().contains("..")) {
+                    listener.onMessage("Skipping " + jarEntry.getName() + ": Invalid path");
+                    continue;
+                }
+
                 if (jarEntry.getName().startsWith("assets/") && !jarEntry.isDirectory()) {
                     listener.onMessage("Extracting " + jarEntry.getName());
                     try (InputStream entryInputStream = jarFile.getInputStream(jarEntry)) {
