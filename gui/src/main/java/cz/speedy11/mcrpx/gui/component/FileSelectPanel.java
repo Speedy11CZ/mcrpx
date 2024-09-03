@@ -82,8 +82,7 @@ public class FileSelectPanel extends JPanel {
                 fileChooser.getExtensionFilters().addAll(
                         new FileChooser.ExtensionFilter("Minecraft Assets File (*.zip;*.jar)", "*.zip", "*.jar"),
                         new FileChooser.ExtensionFilter("Zip File Format (*.zip)", "*.zip"),
-                        new FileChooser.ExtensionFilter("Jar File (*.jar)", "*.jar"),
-                        new FileChooser.ExtensionFilter("Directories", "*")
+                        new FileChooser.ExtensionFilter("Jar File (*.jar)", "*.jar")
                 );
                 fileChooser.setSelectedExtensionFilter(fileChooser.getExtensionFilters().get(0));
                 file = fileChooser.showOpenDialog(null);
