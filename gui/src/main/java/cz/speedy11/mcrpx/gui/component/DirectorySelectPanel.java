@@ -25,20 +25,12 @@
 package cz.speedy11.mcrpx.gui.component;
 
 
-import com.sun.javafx.util.Utils;
-import cz.speedy11.mcrpx.gui.Main;
-import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
-import javax.swing.plaf.FileChooserUI;
-import java.awt.*;
 import java.io.File;
-import java.lang.annotation.Native;
 
 import static cz.speedy11.mcrpx.gui.util.ComponentUtil.componentAlignedToCenter;
 
@@ -48,25 +40,16 @@ import static cz.speedy11.mcrpx.gui.util.ComponentUtil.componentAlignedToCenter;
  * @author Michal Spišak (Speedy11CZ)
  * @since 1.1.0
  */
-public class FileSelectPanel extends JPanel {
+public class DirectorySelectPanel extends JPanel {
 
     private File file;
 
     /**
-     * Returns selected file.
-     *
-     * @return Selected file
-     */
-    public File getFile() {
-        return file;
-    }
-
-    /**
-     * Creates new panel with file selector.
+     * Creates new panel with directory selector.
      *
      * @param text      Text displayed before file selector
      */
-    public FileSelectPanel(String text) {
+    public DirectorySelectPanel(String text) {
         super();
 
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -76,17 +59,10 @@ public class FileSelectPanel extends JPanel {
 
         JButton button = new JButton("...");
 
-        FileChooser fileChooser = new FileChooser();
+        DirectoryChooser directoryChooser = new DirectoryChooser();
         button.addActionListener(e -> {
             Platform.runLater(() -> {
-                fileChooser.getExtensionFilters().addAll(
-                        new FileChooser.ExtensionFilter("Minecraft Assets File (*.zip;*.jar)", "*.zip", "*.jar"),
-                        new FileChooser.ExtensionFilter("Zip File Format (*.zip)", "*.zip"),
-                        new FileChooser.ExtensionFilter("Jar File (*.jar)", "*.jar"),
-                        new FileChooser.ExtensionFilter("Directories", "*")
-                );
-                fileChooser.setSelectedExtensionFilter(fileChooser.getExtensionFilters().get(0));
-                file = fileChooser.showOpenDialog(null);
+                file = directoryChooser.showDialog(null);
                 if (file != null) {
                     filePath.setText(file.getAbsolutePath());
                 }
@@ -96,5 +72,14 @@ public class FileSelectPanel extends JPanel {
         this.add(componentAlignedToCenter(new JLabel(text)));
         this.add(componentAlignedToCenter(filePath));
         this.add(componentAlignedToCenter(button));
+    }
+
+    /**
+     * Returns selected file.
+     *
+     * @return Selected file
+     */
+    public File getFile() {
+        return file;
     }
 }
