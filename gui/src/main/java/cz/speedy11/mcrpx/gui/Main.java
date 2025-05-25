@@ -26,6 +26,7 @@ package cz.speedy11.mcrpx.gui;
 
 import cz.speedy11.mcrpx.gui.component.ExtractorPanel;
 import cz.speedy11.mcrpx.gui.util.ImageUtil;
+import javafx.application.Platform;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,6 +49,9 @@ public class Main {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ignored) {
         }
+
+        // Initialize toolkit
+        Platform.startup(() -> {});
 
         JFrame frame = new JFrame();
         frame.setContentPane(new ExtractorPanel());

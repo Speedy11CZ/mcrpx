@@ -1,5 +1,6 @@
 plugins {
     id("com.github.johnrengelman.shadow")
+    id("org.openjfx.javafxplugin") version "0.0.14"
 }
 
 dependencies {
@@ -24,4 +25,8 @@ tasks.build {
 
 artifacts {
     add("archives", tasks.shadowJar)
+}
+
+javafx {
+    modules = listOf("javafx.base", "javafx.graphics", "javafx.controls")
 }

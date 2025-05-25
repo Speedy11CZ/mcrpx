@@ -47,8 +47,8 @@ public class ExtractorPanel extends JPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(BorderFactory.createEmptyBorder(Main.PANEL_MARGIN, Main.PANEL_MARGIN, Main.PANEL_MARGIN, Main.PANEL_MARGIN));
 
-        FileSelectPanel inputFileSelectPanel = new FileSelectPanel("Input File:             ", false);
-        FileSelectPanel outputDirectorySelectPanel = new FileSelectPanel("Output Directory: ", true);
+        FileSelectPanel inputFileSelectPanel = new FileSelectPanel("Input File:             ");
+        DirectorySelectPanel outputDirectorySelectPanel = new DirectorySelectPanel("Output Directory: ");
 
         JButton btnExtract = new JButton("Extract");
         btnExtract.addActionListener(e -> {
