@@ -35,6 +35,7 @@ import joptsimple.OptionSpec;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Main class of the CLI application.
@@ -66,6 +67,7 @@ public class Main extends ExtractTaskAdapter {
             System.out.println(exception.getLocalizedMessage());
         }
 
+
         if ((options == null) || (options.has("?"))) {
             try {
                 parser.printHelpOn(System.out);
@@ -93,16 +95,21 @@ public class Main extends ExtractTaskAdapter {
             return;
         }
 
-        ZipUtil.extract(inputFile, outputDirectory, new ExtractTaskAdapter() {
-            @Override
-            public void onError(Exception exception) {
-                exception.printStackTrace();
-            }
 
-            @Override
-            public void onMessage(String message) {
-                System.out.println(message);
-            }
-        });
+        try {
+            ZipUtil.extract(inputFile, outputDirectory, new ExtractTaskAdapter() {
+                @Override
+                public void onError(Exception exception) {
+                    exception.printStackTrace();
+                }
+
+                @Override
+                public void onMessage(String message) {
+                    System.out.println(message);
+                }
+            }).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -28,9 +28,7 @@ import cz.speedy11.mcrpx.common.extraction.ExtractTaskListener;
 
 import java.io.*;
 import java.util.Enumeration;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarException;
 import java.util.jar.JarFile;
@@ -46,7 +44,12 @@ import java.util.zip.ZipFile;
  */
 public class ZipUtil {
 
-    private static final ScheduledExecutorService EXECUTOR = Executors.newSingleThreadScheduledExecutor();
+    private static final ExecutorService EXECUTOR = Executors.newSingleThreadScheduledExecutor(runnable -> {
+        Thread thread = new Thread(runnable, "ZipUtil-Executor");
+        thread.setDaemon(true);
+        return thread;
+    });
+
     private static final int BUFFER_SIZE = 4096;
 
     private ZipUtil() {
