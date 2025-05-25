@@ -7,6 +7,14 @@ dependencies {
     implementation(libs.jopt.simple)
 }
 
+tasks.jar {
+    manifest {
+        attributes(
+            "Main-Class" to "cz.speedy11.mcrpx.cli.Main",
+        )
+    }
+}
+
 tasks.shadowJar {
     archiveFileName.set("mcrpx-cli-${rootProject.version}.jar")
 }
