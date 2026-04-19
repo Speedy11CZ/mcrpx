@@ -108,10 +108,14 @@ public class ZipUtil {
                 }
 
                 try {
+                    String filePath = destDirectory + File.separator + zipEntry.getName();
+                    File zipEntryFile = new File(filePath);
+                    if (zipEntry.isDirectory()) {
+                        zipEntryFile.mkdirs();
+                        continue;
+                    }
                     listener.onMessage("Extracting " + zipEntry.getName());
                     try (InputStream entryInputStream = zipFile.getInputStream(zipEntry)) {
-                        String filePath = destDirectory + File.separator + zipEntry.getName();
-                        File zipEntryFile = new File(filePath);
                         zipEntryFile.getParentFile().mkdirs();
                         listener.fileProcessed(entryInputStream.available());
                         extractFile(entryInputStream, zipEntryFile);
