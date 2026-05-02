@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MCRPX - Minecraft Resource Pack Extractor</title>
+  <meta name="description" content="MCRPX is a client-side web app for recovering corrupted Minecraft resource pack ZIP files, previewing recovered files, and downloading a repaired archive.">
+  <meta name="keywords" content="Minecraft, resource pack, ZIP recovery, extractor, client-side, web app, file preview, download">
+  <meta name="author" content="Speedy11CZ">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#15101b">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MCRPX - Minecraft Resource Pack Extractor">
+  <meta property="og:description" content="Recover corrupted Minecraft resource pack ZIP files directly in your browser.">
+  <meta property="og:url" content="https://github.com/speedy11cz/mcrpx">
+  <meta property="og:image" content="favicon.ico">
+  <link rel="canonical" href="https://github.com/speedy11cz/mcrpx">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="favicon.ico">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <main class="shell">
+    <section class="panel" id="extractPanel" aria-labelledby="title">
+      <div class="heading">
+        <p class="eyebrow">Minecraft Resource Pack Extractor</p>
+        <h1 id="title">MCRPX</h1>
+      </div>
+
+      <label class="drop-zone" id="dropZone">
+        <input id="fileInput" type="file" accept=".zip,application/zip,application/x-zip-compressed">
+        <span class="drop-title">Drop a resource pack here</span>
+        <span class="drop-copy">or choose a .zip file</span>
+      </label>
+
+      <div class="status" role="status" aria-live="polite">
+        <div class="status-line">
+          <span class="status-label">State</span>
+          <span id="stateText">Waiting for a ZIP file</span>
+        </div>
+        <div class="meter" aria-hidden="true">
+          <span id="meterFill"></span>
+        </div>
+      </div>
+
+      <p class="project-credit">
+        Created by <a href="https://github.com/speedy11cz" target="_blank" rel="noopener noreferrer">Speedy11CZ</a>
+        · <a href="https://github.com/speedy11cz/mcrpx" target="_blank" rel="noopener noreferrer">GitHub repository</a>
+      </p>
+    </section>
+
+    <section class="browser" id="browserPanel" aria-labelledby="browserTitle" hidden>
+      <div class="browser-header">
+        <div>
+          <p class="eyebrow">Recovered Resource Pack</p>
+          <h2 id="browserTitle">Files</h2>
+          <p id="browserSummary" class="browser-summary"></p>
+          <p class="project-credit">
+            Created by <a href="https://github.com/speedy11cz" target="_blank" rel="noopener noreferrer">Speedy11CZ</a>
+            · <a href="https://github.com/speedy11cz/mcrpx" target="_blank" rel="noopener noreferrer">GitHub repository</a>
+          </p>
+        </div>
+        <div class="browser-actions">
+          <button id="downloadFileButton" type="button" disabled>Download File</button>
+          <button id="downloadZipButton" type="button">Download ZIP</button>
+          <button id="closeBrowserButton" type="button" aria-label="Close file browser">Close</button>
+        </div>
+      </div>
+
+      <div class="browser-layout">
+        <aside class="file-pane" aria-label="Recovered files">
+          <input id="fileFilter" class="file-filter" type="search" placeholder="Search files">
+          <div id="fileList" class="file-list" role="listbox" tabindex="0"></div>
+        </aside>
+        <section class="preview-pane" aria-live="polite">
+          <div id="previewEmpty" class="preview-empty">Select a supported file to preview it.</div>
+          <div id="previewContent" class="preview-content"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
